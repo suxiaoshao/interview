@@ -1,5 +1,3 @@
-use std::collections::HashSet;
-
 pub struct Solution;
 
 #[derive(Clone, Hash, PartialEq, Eq)]
@@ -48,25 +46,22 @@ impl Item {
 
 impl Solution {
     pub fn generate_parenthesis(n: i32) -> Vec<String> {
-        let mut map = HashSet::new();
         let mut result = vec![];
         let item = Item {
             brackets: vec![Brackets::Open],
             open_remain: n - 1,
             close_remain: n,
         };
-        Solution::dfs(&mut map, &item, &mut result);
+        Solution::dfs(&item, &mut result);
         result
     }
-    fn dfs(map: &mut HashSet<Item>, item: &Item, result: &mut Vec<String>) {
+    fn dfs(item: &Item, result: &mut Vec<String>) {
         let items = item.gen();
         for item in items {
             if item.is_complete() {
                 result.push(item.string());
-            } else if !map.contains(&item) {
-                map.insert(item.clone());
-                Solution::dfs(map, &item, result);
-                map.remove(&item);
+            } else {
+                Solution::dfs(&item, result);
             }
         }
     }
