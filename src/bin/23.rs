@@ -38,10 +38,7 @@ impl Ord for ListNode {
 
 impl From<&Box<ListNode>> for ListNode {
     fn from(value: &Box<ListNode>) -> Self {
-        ListNode {
-            val: value.val,
-            next: None,
-        }
+        ListNode::new(value.val)
     }
 }
 
